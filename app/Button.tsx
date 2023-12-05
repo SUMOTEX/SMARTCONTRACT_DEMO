@@ -9,7 +9,6 @@ const WalletButton = () => {
 
 const buttonStyle = {
     backgroundColor: '#4CAF50', // Green background
-    border: 'none',
     color: 'white',
     padding: '15px 32px',
     textAlign: 'center',
