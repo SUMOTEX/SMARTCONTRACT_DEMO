@@ -23,8 +23,6 @@ const createWallet = async () => {
 
   return (
     <main className="p-4 md:p-10 mx-auto max-w-6xl">
-      <Title>SUMOTEX Smart Contract Platform</Title>
-      <Text></Text>
       <Button onClick={()=>createWallet()}>Create Wallet</Button>
     </main>
   );
