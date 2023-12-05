@@ -11,8 +11,8 @@ const createWallet = async () => {
   try {
       const response = await axios.post('https://rpc.sumotex.co/create-wallet');
       console.log(response)
-      if(response.data && response.data.wallet_address) {
-          setWalletAddress(response.data.wallet_address);
+      if(response.data && response.data.result.wallet_address) {
+          setWalletAddress(response.data.result.wallet_address);
       }
       return response.data;
   } catch (error) {
@@ -23,6 +23,7 @@ const createWallet = async () => {
 
   return (
     <main className="p-4 md:p-10 mx-auto max-w-6xl">
+        {walletAddress}
       <Button onClick={()=>createWallet()}>Create Wallet</Button>
     </main>
   );
