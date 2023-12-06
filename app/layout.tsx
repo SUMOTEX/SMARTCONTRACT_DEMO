@@ -6,7 +6,7 @@ import Toast from './toast';
 import { Suspense } from 'react';
 
 export const metadata = {
-  title: 'SUMTOEX SMART CONTRACT GENERATOR',
+  title: 'SUMOTEX SMART CONTRACT GENERATOR',
   description:
     'DASHBOARD TO CREATE SUMOTEX NFT CONTRACT'
 };
