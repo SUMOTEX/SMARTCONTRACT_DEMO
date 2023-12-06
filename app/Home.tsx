@@ -5,6 +5,7 @@ import { Button } from '@tremor/react';
 
 export default function HomePage() {
   const [walletAddress, setWalletAddress] = useState('');
+  const [contractAddress,setContractAddress]=useState('')
   const [privateKey,setPrivateKey]=useState();
   const [hasPrivateKey, setHasPrivateKey] = useState(false);
 
@@ -39,10 +40,10 @@ export default function HomePage() {
         call_address:"",
         private_key:""
     }
-    const headers = {"Accept":"application/json, text/plain, /","Content-Type": "multipart/form-data"}
     try {
         axios.post('https://rpc.sumotex.co/create-nft-contract',JSON.stringify(postData)).then((response) => {
             console.log(response.status, response.data);
+            setContractAddress(response.data.result.contract_address);
           });
     } catch (error) {
         console.error("Error creating NFT contract:", error);
@@ -53,6 +54,7 @@ export default function HomePage() {
   return (
     <main className="p-2 md:p-4 mx-auto max-w-12xl">
       {walletAddress && <div>Wallet Address: {walletAddress}</div>}
+      {contractAddress && <div>Contract Address: {contractAddress}</div>}
       {!hasPrivateKey && (
         <Button onClick={createWallet}>Create Wallet</Button>
       )}
