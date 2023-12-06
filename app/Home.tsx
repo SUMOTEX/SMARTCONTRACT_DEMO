@@ -5,10 +5,15 @@ import { Button } from '@tremor/react';
 
 export default function HomePage() {
   const [walletAddress, setWalletAddress] = useState('');
-  const [contractAddress,setContractAddress]=useState('')
+  const [contractAddress,setContractAddress]=useState('');
+  const [walletBalance,setwalletBalance] = useState(0);
   const [privateKey,setPrivateKey]=useState();
   const [hasPrivateKey, setHasPrivateKey] = useState(false);
 
+   // New state variables for contract creation inputs
+   const [contractName, setContractName] = useState('');
+   const [contractSymbol, setContractSymbol] = useState('');
+ 
   useEffect(() => {
     const privateKey = localStorage.getItem('privateKey');
     const walletAddress = localStorage.getItem('walletAddress');    
@@ -53,8 +58,25 @@ export default function HomePage() {
 
   return (
     <main className="p-2 md:p-4 mx-auto max-w-12xl">
-      {walletAddress && <div>Wallet Address: {walletAddress}</div>}
-      {contractAddress && <div>Contract Address: {contractAddress}</div>}
+      {walletAddress && <div className="mb-2">Wallet Address: {walletAddress}</div>}
+      {walletBalance!=0 && <div className="mb-2">Wallet Balance: {walletBalance} SMTX</div>}
+      {contractAddress && <div className="mb-2">NFT Contract Address: {contractAddress}</div>}
+      <div className='mb-4'>
+        <input
+          type="text"
+          value={contractName}
+          onChange={(e) => setContractName(e.target.value)}
+          placeholder="Contract Name"
+          className="mr-2 p-2 border border-gray-300 rounded"
+        />
+        <input
+          type="text"
+          value={contractSymbol}
+          onChange={(e) => setContractSymbol(e.target.value)}
+          placeholder="Contract Symbol"
+          className="mr-2 p-2 border border-gray-300 rounded"
+        />
+      </div>
       {!hasPrivateKey && (
         <Button onClick={createWallet}>Create Wallet</Button>
       )}

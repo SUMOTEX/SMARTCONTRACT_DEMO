@@ -717,6 +717,9 @@ video {
 .col-span-9 {
   grid-column: span 9 / span 9;
 }
+.m-4 {
+  margin: 1rem;
+}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
