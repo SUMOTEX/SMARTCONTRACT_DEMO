@@ -1,30 +1,44 @@
 'use client'
-import React, { useState } from 'react';
-import { Card, Title, Text,Button } from '@tremor/react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { Button } from '@tremor/react';
 
 export default function HomePage() {
   const [walletAddress, setWalletAddress] = useState('');
+  const [hasPrivateKey, setHasPrivateKey] = useState(false);
 
-const createWallet = async () => {
-  try {
+  useEffect(() => {
+    const privateKey = localStorage.getItem('privateKey');
+    const walletAddress = localStorage.getItem('walletAddress');    
+
+    if (privateKey) {
+      setHasPrivateKey(true);
+      setWalletAddress(walletAddress);
+      
+      // Optionally, fetch the public key here if your API supports it
+    }
+  }, []);
+
+  const createWallet = async () => {
+    try {
       const response = await axios.post('https://rpc.sumotex.co/create-wallet');
-      console.log(response)
-      if(response.data && response.data.result.wallet_address) {
-          setWalletAddress(response.data.result.wallet_address);
+      if (response.data && response.data.result.wallet_address) {
+        setWalletAddress(response.data.result.wallet_address);
+        localStorage.setItem('privateKey', response.data.result.private_key);
+        localStorage.setItem('walletAddress', response.data.result.wallet_address);
+        setHasPrivateKey(true);
       }
-      return response.data;
-  } catch (error) {
+    } catch (error) {
       console.error("Error creating wallet:", error);
-      return null;
-  }
-};
+    }
+  };
 
   return (
-    <main className="p-4 md:p-10 mx-auto max-w-6xl">
-        {walletAddress}
-      <Button onClick={()=>createWallet()}>Create Wallet</Button>
+    <main className="p-2 md:p-4 mx-auto max-w-12xl">
+      {walletAddress && <div>Wallet Address: {walletAddress}</div>}
+      {!hasPrivateKey && (
+        <Button onClick={createWallet}>Create Wallet</Button>
+      )}
     </main>
   );
 }
